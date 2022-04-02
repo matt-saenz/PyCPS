@@ -11,7 +11,7 @@ BASE_URL = "http://api.census.gov/data/"
 # Core functions
 
 
-def get_asec(year: int, vars: list, show_url: bool = False) -> pd.DataFrame:
+def get_asec(year: int, vars: list[str], show_url: bool = False) -> pd.DataFrame:
     """Get CPS ASEC microdata using the Census API."""
 
     key = _get_key()
@@ -29,7 +29,7 @@ def get_asec(year: int, vars: list, show_url: bool = False) -> pd.DataFrame:
 
 
 def get_basic(
-    year: int, month: int, vars: list, show_url: bool = False
+    year: int, month: int, vars: list[str], show_url: bool = False
 ) -> pd.DataFrame:
     """Get basic monthly CPS microdata using the Census API."""
 
@@ -73,14 +73,21 @@ def _get_data(url: str, show_url: bool) -> pd.DataFrame:
     return df
 
 
-def _format_vars(vars: list) -> str:
+def _format_vars(vars: list[str]) -> str:
     if not isinstance(vars, list):
         raise TypeError("vars must be a list")
 
-    match = [bool(re.search("[^A-Za-z0-9_]", var)) for var in vars]
+    not_string = [not isinstance(var, str) for var in vars]
 
-    if any(match):
-        raise ValueError("vars must only contain letters, digits, and underscores")
+    if any(not_string):
+        raise TypeError("vars must only contain strings")
+
+    invalid_char = [bool(re.search("[^A-Za-z0-9_]", var)) for var in vars]
+
+    if any(invalid_char):
+        raise ValueError(
+            "Elements of vars must only contain letters, digits, and underscores"
+        )
 
     formatted_vars = ",".join(vars).upper()
 
