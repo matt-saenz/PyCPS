@@ -4,4 +4,4 @@
 
 ## Overview
 
-Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR) for learning purposes. Learning resources used include [Python for Data Analysis](https://www.oreilly.com/library/view/python-for-data/9781491957653/) and the [Python Tutorial](https://docs.python.org/3.9/tutorial/index.html).
+Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR) for learning purposes. Learning resources used include [Python for Data Analysis](https://www.oreilly.com/library/view/python-for-data/9781491957653/), the [Python Tutorial](https://docs.python.org/3.9/tutorial/index.html), and [Beyond the Basic Stuff with Python](https://nostarch.com/beyond-basic-stuff-python).
