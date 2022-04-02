@@ -35,8 +35,8 @@ def get_basic(
 
     key = _get_key()
 
-    if year not in range(1994, 2022):
-        raise ValueError("Years 1994 to 2021 are currently supported")
+    if year not in range(1994, 2023):
+        raise ValueError("Years 1994 to 2022 are currently supported")
 
     month_abb = _get_month_abb(month)
 
