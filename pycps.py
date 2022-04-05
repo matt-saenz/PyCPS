@@ -23,6 +23,8 @@ def get_asec(year: int, vars: list[str], show_url: bool = False) -> pd.DataFrame
 
     url = f"{BASE_URL}{year}/cps/asec/mar?get={formatted_vars}&key={key}"
 
+    print(f"Getting CPS ASEC microdata for {year}")
+
     df = _get_data(url, show_url)
 
     return df
@@ -38,11 +40,13 @@ def get_basic(
     if year not in range(1994, 2023):
         raise ValueError("Years 1994 to 2022 are currently supported")
 
-    month_abb = _get_month_abb(month)
+    month_name, month_abb = _get_month_info(month)
 
     formatted_vars = _format_vars(vars)
 
     url = f"{BASE_URL}{year}/cps/basic/{month_abb}?get={formatted_vars}&key={key}"
+
+    print(f"Getting basic monthly CPS microdata for {month_name} {year}")
 
     df = _get_data(url, show_url)
 
@@ -59,7 +63,7 @@ class CensusAPIRequestError(Exception):
 def _get_data(url: str, show_url: bool) -> pd.DataFrame:
     if show_url:
         # Suppress key!
-        print(re.sub("&key=.*", "", url))
+        print("URL:", re.sub("&key=.*", "", url))
 
     resp = requests.get(url)
 
@@ -117,29 +121,28 @@ def _get_key() -> str:
     return key
 
 
-def _get_month_abb(month: int) -> str:
+def _get_month_info(month: int) -> tuple[str, str]:
     if month not in range(1, 13):
         raise ValueError("month must be a number ranging from 1 to 12")
 
-    month_abbs = [
-        "",
-        "jan",
-        "feb",
-        "mar",
-        "apr",
-        "may",
-        "jun",
-        "jul",
-        "aug",
-        "sep",
-        "oct",
-        "nov",
-        "dec",
-    ]
+    month_info_lookup = {
+        1: ("January", "jan"),
+        2: ("February", "feb"),
+        3: ("March", "mar"),
+        4: ("April", "apr"),
+        5: ("May", "may"),
+        6: ("June", "jun"),
+        7: ("July", "jul"),
+        8: ("August", "aug"),
+        9: ("September", "sep"),
+        10: ("October", "oct"),
+        11: ("November", "nov"),
+        12: ("December", "dec"),
+    }
 
-    month_abb = month_abbs[month]
+    month_info = month_info_lookup[month]
 
-    return month_abb
+    return month_info
 
 
 if __name__ == "__main__":
