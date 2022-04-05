@@ -52,6 +52,10 @@ def get_basic(
 # Helpers
 
 
+class CensusAPIRequestError(Exception):
+    """Raise if Census API request fails."""
+
+
 def _get_data(url: str, show_url: bool) -> pd.DataFrame:
     if show_url:
         # Suppress key!
@@ -60,9 +64,12 @@ def _get_data(url: str, show_url: bool) -> pd.DataFrame:
     resp = requests.get(url)
 
     if resp.status_code != 200:
-        raise Exception(
+        raise CensusAPIRequestError(
             f"Census API request failed [{resp.status_code}]: {resp.reason}"
         )
+
+    if resp.headers["content-type"] != "application/json;charset=utf-8":
+        raise CensusAPIRequestError("Census API did not return JSON")
 
     df = pd.DataFrame(resp.json())
 
@@ -94,11 +101,18 @@ def _format_vars(vars: list[str]) -> str:
     return formatted_vars
 
 
+# Create custom exception since clear built-in does not exist
+class EnvVarNotFoundError(Exception):
+    """Raise if environment variable is not found."""
+
+
 def _get_key() -> str:
     key = os.getenv("CENSUS_API_KEY")
 
     if key is None:
-        raise Exception("You must set env var CENSUS_API_KEY")
+        raise EnvVarNotFoundError(
+            "You must provide a Census API key by setting env var CENSUS_API_KEY"
+        )
 
     return key
 
