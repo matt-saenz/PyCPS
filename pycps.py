@@ -146,8 +146,32 @@ def _get_month_info(month: int) -> tuple[str, str]:
 
 
 if __name__ == "__main__":
-    cy = int(input("Enter a year: "))
-    print("Getting data...")
-    asec = get_asec(cy + 1, ["marsupwt"])
-    pop = asec.marsupwt.sum()
-    print(f"In {cy}, the total US population was {pop:,.0f}.")
+    # Get inputs
+    print(
+        "Hello! This if-name-main code calculates the employment-to-population "
+        "(EPOP) ratio for a given month and year."
+    )
+    month_year = input(
+        "Please provide a month and year in MM/YYYY format (e.g., 09/2021): "
+    )
+    month, year = [int(x) for x in month_year.split("/")]
+    month_name, month_abb = _get_month_info(month)
+    # Get data
+    cps = get_basic(year, month, ["prpertyp", "prtage", "pemlr", "pwcmpwgt"], True)
+    print(cps.head(10))
+    # Clean data
+    cps = cps.loc[(cps.prpertyp == 2) & (cps.prtage >= 16)]
+    cps["pop16plus"] = True  # Given above filter
+    cps["employed"] = cps.pemlr.isin([1, 2])
+    # Analyze data
+    results = (
+        cps[["pop16plus", "employed"]]
+        .apply(lambda x, wt: x.dot(wt), wt=cps.pwcmpwgt)  # Weighted sum
+        .astype(int)
+    )
+    print(results)
+    # Calculate EPOP ratio
+    print(
+        f"The EPOP ratio for {month_name} {year} was "
+        f"{results['employed'] / results['pop16plus']:.1%}."
+    )
