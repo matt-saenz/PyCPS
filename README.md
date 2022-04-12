@@ -6,20 +6,25 @@
 
 Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR), an R package I wrote for loading CPS microdata using the Census API, for learning purposes. Learning resources used include [Python for Data Analysis](https://www.oreilly.com/library/view/python-for-data/9781491957653/), the [Python Tutorial](https://docs.python.org/3.9/tutorial/index.html), and [Beyond the Basic Stuff with Python](https://nostarch.com/beyond-basic-stuff-python).
 
-## Setting Up This Repo
+## Setup Instructions
 
-You can set up this repo by opening your terminal, navigating to wherever you typically store local clones, and running:
+Start by opening your terminal, navigating to wherever you typically store local clones, and running:
 
 ```
 git clone https://github.com/matt-saenz/PyCPS.git
 cd PyCPS
+```
+
+Next, set up an environment for PyCPS by running:
+
+```
 conda create -n pycps_env pandas requests black mypy
 conda activate pycps_env
 ```
 
 You'll also need to obtain a [Census API key](https://api.census.gov/data/key_signup.html) and store it in an environment variable named `CENSUS_API_KEY`.
 
-You can verify that the repo has been set up correctly and get a quick demo of the module by running:
+You can verify that everything has been set up correctly and get a quick demo of the module by running:
 
 ```
 python pycps.py
