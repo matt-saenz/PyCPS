@@ -8,21 +8,21 @@ Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR), an R package I wro
 
 ## Setup Instructions
 
-Start by opening your terminal, navigating to wherever you typically store local clones, and running:
+Start by opening your terminal and navigating to wherever you'd like to store your local clone of the repo. Once you're there, clone the repo and then move into your local clone by running:
 
 ```
 git clone https://github.com/matt-saenz/PyCPS.git
 cd PyCPS
 ```
 
-Next, set up an environment for PyCPS by running:
+Next, create an environment for PyCPS and then activate the environment by running:
 
 ```
 conda create -n pycps_env pandas requests black mypy
 conda activate pycps_env
 ```
 
-You'll also need to obtain a [Census API key](https://api.census.gov/data/key_signup.html) and store it in an environment variable named `CENSUS_API_KEY`.
+Lastly, obtain a [Census API key](https://api.census.gov/data/key_signup.html) and store it in an environment variable named `CENSUS_API_KEY`.
 
 You can verify that everything has been set up correctly and get a quick demo of the module by running:
 
