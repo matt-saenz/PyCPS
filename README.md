@@ -4,25 +4,25 @@
 
 ## Overview
 
-Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR), an R package I wrote for loading CPS microdata using the Census API, for learning purposes. Learning resources used include [Python for Data Analysis](https://www.oreilly.com/library/view/python-for-data/9781491957653/), the [Python Tutorial](https://docs.python.org/3.9/tutorial/index.html), and [Beyond the Basic Stuff with Python](https://nostarch.com/beyond-basic-stuff-python).
+Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR), an R package I wrote for loading [Current Population Survey (CPS)](https://www.census.gov/programs-surveys/cps/about.html) microdata using the Census API, for learning purposes. Learning resources used include [Python for Data Analysis](https://www.oreilly.com/library/view/python-for-data/9781491957653/), the [Python Tutorial](https://docs.python.org/3.9/tutorial/index.html), and [Beyond the Basic Stuff with Python](https://nostarch.com/beyond-basic-stuff-python).
 
 ## Setup Instructions
 
-Start by opening your terminal and navigating to wherever you'd like to store your local clone of the repo. Once you're there, clone the repo and then move into your local clone by running:
+Start by opening your terminal and navigating to wherever you'd like to store your local clone of the PyCPS repo. Once you're there, clone the repo and then move into your local clone by running:
 
 ```
 git clone https://github.com/matt-saenz/PyCPS.git
 cd PyCPS
 ```
 
-Next, create an environment for PyCPS and then activate the environment by running:
+Next, create an environment for playing with (and developing) PyCPS and then activate the environment by running:
 
 ```
 conda create -n pycps_env pandas requests black mypy
 conda activate pycps_env
 ```
 
-Lastly, obtain a [Census API key](https://api.census.gov/data/key_signup.html) and store it in an environment variable named `CENSUS_API_KEY`.
+Lastly, to use PyCPS you must obtain a [Census API key](https://api.census.gov/data/key_signup.html) and store it in an environment variable named `CENSUS_API_KEY`.
 
 You can verify that everything has been set up correctly and get a quick demo of the module by running:
 
@@ -30,7 +30,7 @@ You can verify that everything has been set up correctly and get a quick demo of
 python pycps.py
 ```
 
-Which will allow you to calculate the employment-to-population ratio for a given month and year:
+Which will allow you to calculate the [employment-to-population ratio](https://www.bls.gov/cps/definitions.htm#epop) for a given month and year:
 
 ```
 Hello! This if-name-main code calculates the employment-to-population (EPOP) ratio for a given month and year.
