@@ -125,24 +125,26 @@ def _get_month_info(month: int) -> tuple[str, str]:
     if month not in range(1, 13):
         raise ValueError("month must be a number ranging from 1 to 12")
 
-    month_info_lookup = {
-        1: ("January", "jan"),
-        2: ("February", "feb"),
-        3: ("March", "mar"),
-        4: ("April", "apr"),
-        5: ("May", "may"),
-        6: ("June", "jun"),
-        7: ("July", "jul"),
-        8: ("August", "aug"),
-        9: ("September", "sep"),
-        10: ("October", "oct"),
-        11: ("November", "nov"),
-        12: ("December", "dec"),
-    }
+    month_names = [
+        "",  # Empty at 0 so that month number matches month name
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ]
 
-    month_info = month_info_lookup[month]
+    month_name = month_names[month]
+    month_abb = month_name[:3].lower()
 
-    return month_info
+    return month_name, month_abb
 
 
 if __name__ == "__main__":
