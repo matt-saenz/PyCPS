@@ -150,8 +150,8 @@ def _get_month_info(month: int) -> tuple[str, str]:
 if __name__ == "__main__":
     # Get inputs
     print(
-        "Hello! This if-name-main code calculates the employment-to-population "
-        "(EPOP) ratio for a given month and year."
+        "Hello! This if-name-main code calculates the employment-to-population",
+        "(EPOP) ratio for a given month and year.",
     )
     month_year = input(
         "Please provide a month and year in MM/YYYY format (e.g., 09/2021): "
@@ -159,8 +159,9 @@ if __name__ == "__main__":
     month, year = [int(x) for x in month_year.split("/")]
     month_name, month_abb = _get_month_info(month)
     # Get data
+    print()  # For empty line
     cps = get_basic(year, month, ["prpertyp", "prtage", "pemlr", "pwcmpwgt"], True)
-    print(cps.head(10))
+    print("\nRaw data:", cps, sep="\n")
     # Clean data
     cps = cps.loc[(cps.prpertyp == 2) & (cps.prtage >= 16)]
     cps["pop16plus"] = True  # Given above filter
@@ -171,9 +172,9 @@ if __name__ == "__main__":
         .apply(lambda x, wt: x.dot(wt), wt=cps.pwcmpwgt)  # Weighted sum
         .astype(int)
     )
-    print(results)
+    print("\nWeighted sums:", results, sep="\n")
     # Calculate EPOP ratio
     print(
-        f"The EPOP ratio for {month_name} {year} was "
-        f"{results['employed'] / results['pop16plus']:.1%}."
+        f"\nThe EPOP ratio for {month_name} {year} was",
+        f"{results['employed'] / results['pop16plus']:.1%}.",
     )
