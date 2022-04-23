@@ -100,6 +100,9 @@ def _format_vars(vars: list[str]) -> str:
             "Elements of vars must only contain letters, digits, and underscores"
         )
 
+    if len(vars) != len(set(vars)):
+        raise ValueError("vars must not contain any duplicate elements")
+
     formatted_vars = ",".join(vars).upper()
 
     return formatted_vars
