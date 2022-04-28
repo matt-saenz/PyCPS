@@ -129,7 +129,7 @@ def _get_month_info(month: int) -> tuple[str, str]:
         raise ValueError("month must be a number ranging from 1 to 12")
 
     month_names = [
-        "",  # Empty at 0 so that month number matches month name
+        "",  # Empty string at 0 so that month number matches month name
         "January",
         "February",
         "March",
