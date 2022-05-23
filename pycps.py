@@ -16,8 +16,7 @@ def get_asec(year: int, vars: list[str], show_url: bool = False) -> pd.DataFrame
 
     key = _get_key()
 
-    if year not in range(2014, 2022):
-        raise ValueError("Years 2014 to 2021 are currently supported")
+    _check_year(year, dataset="asec")
 
     formatted_vars = _format_vars(vars)
 
@@ -37,8 +36,7 @@ def get_basic(
 
     key = _get_key()
 
-    if year not in range(1994, 2023):
-        raise ValueError("Years 1994 to 2022 are currently supported")
+    _check_year(year, dataset="basic")
 
     month_name, month_abb = _get_month_info(month)
 
@@ -82,6 +80,15 @@ def _get_data(url: str, show_url: bool) -> pd.DataFrame:
     df = df.apply(pd.to_numeric)
 
     return df
+
+
+def _check_year(year: int, dataset: str) -> None:
+    years_lookup = {"asec": (2014, 2021), "basic": (1994, 2022)}
+
+    start_year, end_year = years_lookup[dataset]
+
+    if year not in range(start_year, end_year + 1):
+        raise ValueError(f"Years {start_year} to {end_year} are currently supported")
 
 
 def _format_vars(vars: list[str]) -> str:
