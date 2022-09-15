@@ -8,23 +8,18 @@ Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR), an R package I wro
 
 ## Setup Instructions
 
-Start by opening your terminal and navigating to wherever you'd like to store your local clone of the PyCPS repo. Once you're there, clone the repo and then move into your local clone by running:
-
 ```
+# Clone the repo
 git clone https://github.com/matt-saenz/PyCPS.git
-cd PyCPS
+
+# Set env var CENSUS_API_KEY
+# https://api.census.gov/data/key_signup.html
+vim ~/.bash_profile
 ```
 
-Next, create an environment for playing with (and developing) PyCPS and then activate the environment by running:
+## Demo
 
-```
-conda create -n pycps_env pandas requests black mypy
-conda activate pycps_env
-```
-
-Lastly, to use PyCPS you must obtain a [Census API key](https://api.census.gov/data/key_signup.html) and store it in an environment variable named `CENSUS_API_KEY`.
-
-You can verify that everything has been set up correctly and get a quick demo of the module by running:
+You can get a quick demo of the module by running:
 
 ```
 python pycps.py
