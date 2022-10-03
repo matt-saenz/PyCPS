@@ -8,7 +8,7 @@ Python rewrite of [cpsR](https://github.com/matt-saenz/cpsR), an R package I wro
 
 ## Setup Instructions
 
-```
+```shell
 # Clone the repo
 git clone https://github.com/matt-saenz/PyCPS.git
 
@@ -18,6 +18,7 @@ pip install -r requirements.txt
 # Set env var CENSUS_API_KEY
 # https://api.census.gov/data/key_signup.html
 vim ~/.bash_profile
+source ~/.bash_profile
 ```
 
 ## Demo
