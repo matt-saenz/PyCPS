@@ -5,7 +5,7 @@ import pandas as pd  # type: ignore
 import requests
 
 
-BASE_URL = "http://api.census.gov/data/"
+BASE_URL = "https://api.census.gov/data/"
 
 
 # Core functions

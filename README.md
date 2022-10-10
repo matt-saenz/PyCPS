@@ -36,7 +36,7 @@ Hello! This if-name-main code calculates the employment-to-population (EPOP) rat
 Please provide a month and year in MM/YYYY format (e.g., 09/2021): 03/2022
 
 Getting basic monthly CPS microdata for March 2022
-URL: http://api.census.gov/data/2022/cps/basic/mar?get=PRPERTYP,PRTAGE,PEMLR,PWCMPWGT
+URL: https://api.census.gov/data/2022/cps/basic/mar?get=PRPERTYP,PRTAGE,PEMLR,PWCMPWGT
 
 Raw data:
         prpertyp  prtage  pemlr   pwcmpwgt
