@@ -9,6 +9,21 @@ import pycps.get_data
 
 
 class TestGetData(unittest.TestCase):
+    def test_check_variables(self):
+        self.assertIsNone(pycps.get_data._check_variables(["Hello_World1"]))
+
+        with self.assertRaises(TypeError):
+            pycps.get_data._check_variables("hello")
+
+        with self.assertRaises(TypeError):
+            pycps.get_data._check_variables(["hello", 1])
+
+        with self.assertRaises(ValueError):
+            pycps.get_data._check_variables(["hello?"])
+
+        with self.assertRaises(ValueError):
+            pycps.get_data._check_variables(["hello", "hello"])
+
     def test_make_url(self):
         self.assertEqual(
             pycps.get_data._make_url(
