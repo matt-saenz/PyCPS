@@ -36,9 +36,6 @@ MONTH_NAME = [
 ]
 
 
-# Core functions
-
-
 def get_asec(
     year: int,
     variables: list[str],
@@ -99,9 +96,6 @@ def get_basic(
     df = _get_data(url, show_url)
 
     return df
-
-
-# Helpers
 
 
 def _make_url(
