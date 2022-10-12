@@ -1,6 +1,6 @@
 # PyCPS
 
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 ## Overview
 
@@ -18,7 +18,7 @@ Install the package:
 pip install py-cps  # Alas, pycps was taken
 ```
 
-And store your [Census API key](https://api.census.gov/data/key_signup.html) in an environment variable named `CENSUS_API_KEY`.
+and store your [Census API key](https://api.census.gov/data/key_signup.html) in an environment variable named `CENSUS_API_KEY`.
 
 ## Example Usage
 
