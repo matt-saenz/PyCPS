@@ -15,7 +15,7 @@ For an R version of this package, check out [cpsR](https://github.com/matt-saenz
 Install the package:
 
 ```shell
-pip install py-cps  # Alas, pycps was taken
+pip install pycpsdata  # Alas, pycps was taken
 ```
 
 and store your [Census API key](https://api.census.gov/data/key_signup.html) in an environment variable named `CENSUS_API_KEY`.
