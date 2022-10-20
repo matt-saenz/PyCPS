@@ -126,7 +126,7 @@ def _get_data(url: str, show_url: bool) -> pd.DataFrame:
 
     if show_url:
         # Suppress key!
-        print("URL:", re.sub("&key=.*", "", url))
+        print("URL:", re.sub(r"&key=.*", "", url))
 
     headers = {"user-agent": "https://github.com/matt-saenz/PyCPS"}
 
@@ -180,7 +180,7 @@ def _check_variables(variables: list[str]) -> None:
     if any(not_string):
         raise TypeError("variables must only contain strings")
 
-    invalid_char = [re.search("[^A-Za-z0-9_]", var) for var in variables]
+    invalid_char = [re.search(r"[^A-Za-z0-9_]", var) for var in variables]
 
     if any(invalid_char):
         raise ValueError(
