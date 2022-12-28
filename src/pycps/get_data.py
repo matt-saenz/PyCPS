@@ -45,7 +45,7 @@ def get_asec(
     Load CPS ASEC microdata into a pandas DataFrame using the
     Census API.
 
-    year: Year of data to retrieve. Years 2014 to 2022 are currently
+    year: Year of data to retrieve. Years 1992 to 2022 are currently
         supported.
     variables: List of variables to retrieve.
     show_url: If True, show the URL the request was sent to. Defaults
@@ -54,7 +54,7 @@ def get_asec(
 
     key = _get_key()  # Get key first to fail fast if it is not found
 
-    _check_year_in_range(year, start_year=2014, end_year=2022)
+    _check_year_in_range(year, start_year=1992, end_year=2022)
 
     month = 3  # Month of CPS ASEC is always March
 
@@ -77,7 +77,7 @@ def get_basic(
     Load basic monthly CPS microdata into a pandas DataFrame using the
     Census API.
 
-    year: Year of data to retrieve. Years 1989 to 2022 are currently
+    year: Year of data to retrieve. Years 1989 to 2023 are currently
         supported.
     month: Month of data to retrieve (specified as a number).
     variables: List of variables to retrieve.
@@ -87,7 +87,7 @@ def get_basic(
 
     key = _get_key()
 
-    _check_year_in_range(year, start_year=1989, end_year=2022)
+    _check_year_in_range(year, start_year=1989, end_year=2023)
 
     url = _make_url("basic", year, month, variables, key)
 
