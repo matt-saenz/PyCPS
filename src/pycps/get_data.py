@@ -175,17 +175,15 @@ def _check_variables(variables: list[str]) -> None:
     if not isinstance(variables, list):
         raise TypeError("variables must be a list")
 
-    not_string = [not isinstance(var, str) for var in variables]
+    for var in variables:
+        if not isinstance(var, str):
+            raise TypeError("variables must only contain strings")
 
-    if any(not_string):
-        raise TypeError("variables must only contain strings")
-
-    invalid_char = [re.search(r"[^A-Za-z0-9_]", var) for var in variables]
-
-    if any(invalid_char):
-        raise ValueError(
-            "Elements of variables must only contain letters, digits, and underscores"
-        )
+    for var in variables:
+        if re.search(r"[^A-Za-z0-9_]", var):
+            raise ValueError(
+                "Elements of variables must only contain letters, digits, and underscores"
+            )
 
     if len(variables) != len(set(variables)):
         raise ValueError("variables must not contain any duplicate elements")
