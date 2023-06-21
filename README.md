@@ -26,7 +26,6 @@ and store your [Census API key](https://api.census.gov/data/key_signup.html) in 
 from pycps import get_asec
 
 asec = get_asec(2021, ["a_age", "marsupwt"])
-# Getting CPS ASEC microdata for 2021
 
 asec
 #         a_age  marsupwt

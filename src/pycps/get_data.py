@@ -15,7 +15,7 @@ import os
 import re
 
 import pandas as pd  # type: ignore
-import requests
+import requests  # type: ignore
 
 
 # Hard code month names since they should not vary by locale
@@ -39,7 +39,6 @@ MONTH_NAME = [
 def get_asec(
     year: int,
     variables: list[str],
-    show_url: bool = False,
 ) -> pd.DataFrame:
     """
     Load CPS ASEC microdata into a pandas DataFrame using the
@@ -48,8 +47,6 @@ def get_asec(
     year: Year of data to retrieve. Years 1992 to 2022 are currently
         supported.
     variables: List of variables to retrieve.
-    show_url: If True, show the URL the request was sent to. Defaults
-        to False.
     """
 
     key = _get_key()  # Get key first to fail fast if it is not found
@@ -60,9 +57,7 @@ def get_asec(
 
     url = _make_url("asec", year, month, variables, key)
 
-    print(f"Getting CPS ASEC microdata for {year}")
-
-    df = _get_data(url, show_url)
+    df = _get_data(url)
 
     return df
 
@@ -71,7 +66,6 @@ def get_basic(
     year: int,
     month: int,
     variables: list[str],
-    show_url: bool = False,
 ) -> pd.DataFrame:
     """
     Load basic monthly CPS microdata into a pandas DataFrame using the
@@ -81,8 +75,6 @@ def get_basic(
         supported.
     month: Month of data to retrieve (specified as a number).
     variables: List of variables to retrieve.
-    show_url: If True, show the URL the request was sent to. Defaults
-        to False.
     """
 
     key = _get_key()
@@ -91,9 +83,7 @@ def get_basic(
 
     url = _make_url("basic", year, month, variables, key)
 
-    print(f"Getting basic monthly CPS microdata for {MONTH_NAME[month]} {year}")
-
-    df = _get_data(url, show_url)
+    df = _get_data(url)
 
     return df
 
@@ -121,12 +111,8 @@ def _make_url(
     return url
 
 
-def _get_data(url: str, show_url: bool) -> pd.DataFrame:
+def _get_data(url: str) -> pd.DataFrame:
     """Send request to URL and return response content as DataFrame."""
-
-    if show_url:
-        # Suppress key!
-        print("URL:", re.sub(r"&key=.*", "", url))
 
     headers = {"user-agent": "https://github.com/matt-saenz/PyCPS"}
 

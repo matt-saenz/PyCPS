@@ -3,7 +3,7 @@
 
 import unittest
 
-import pandas as pd
+import pandas as pd  # type: ignore
 
 import pycps.get_data as get_data
 
