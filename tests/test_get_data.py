@@ -53,15 +53,14 @@ class TestGetData(unittest.TestCase):
 
         self.assertTrue(built.equals(expected))
 
-    def test_check_year_in_range(self):
-        start_year, end_year = 2010, 2013
+    def test_check_year(self):
+        min_year = 2010
 
-        for year in range(start_year, end_year + 1):
-            self.assertIsNone(get_data._check_year_in_range(year, start_year, end_year))
+        for year in range(min_year, min_year + 10):
+            self.assertIsNone(get_data._check_year(year, min_year))
 
-        for bad_year in [start_year - 1, end_year + 1]:
-            with self.assertRaises(ValueError):
-                get_data._check_year_in_range(bad_year, start_year, end_year)
+        with self.assertRaises(ValueError):
+            get_data._check_year(min_year - 1, min_year)
 
     def test_check_month(self):
         for month in range(1, 13):

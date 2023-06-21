@@ -44,14 +44,14 @@ def get_asec(
     Load CPS ASEC microdata into a pandas DataFrame using the
     Census API.
 
-    year: Year of data to retrieve. Years 1992 to 2022 are currently
+    year: Year of data to retrieve. Years 1992 and on are currently
         supported.
     variables: List of variables to retrieve.
     """
 
     key = _get_key()  # Get key first to fail fast if it is not found
 
-    _check_year_in_range(year, start_year=1992, end_year=2022)
+    _check_year(year, min_year=1992)
 
     month = 3  # Month of CPS ASEC is always March
 
@@ -71,7 +71,7 @@ def get_basic(
     Load basic monthly CPS microdata into a pandas DataFrame using the
     Census API.
 
-    year: Year of data to retrieve. Years 1989 to 2023 are currently
+    year: Year of data to retrieve. Years 1989 and on are currently
         supported.
     month: Month of data to retrieve (specified as a number).
     variables: List of variables to retrieve.
@@ -79,7 +79,7 @@ def get_basic(
 
     key = _get_key()
 
-    _check_year_in_range(year, start_year=1989, end_year=2023)
+    _check_year(year, min_year=1989)
 
     url = _make_url("basic", year, month, variables, key)
 
@@ -148,11 +148,11 @@ def _build_df(raw_data: list[list[str]]) -> pd.DataFrame:
     return df
 
 
-def _check_year_in_range(year: int, start_year: int, end_year: int) -> None:
-    """Check if year is in a simple range."""
+def _check_year(year: int, min_year: int) -> None:
+    """Check if year is valid."""
 
-    if year not in range(start_year, end_year + 1):
-        raise ValueError(f"Years {start_year} to {end_year} are currently supported")
+    if year < min_year:
+        raise ValueError(f"Years {min_year} and on are currently supported")
 
 
 def _check_variables(variables: list[str]) -> None:
