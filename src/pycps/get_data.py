@@ -13,6 +13,7 @@ Census API.
 
 import os
 import re
+from http import HTTPStatus
 
 import pandas as pd  # type: ignore
 import requests  # type: ignore
@@ -119,8 +120,11 @@ def _get_data(url: str) -> pd.DataFrame:
     resp = requests.get(url, headers=headers)
 
     if resp.status_code != 200:
+        # Census API does not (at least currently) supply resp reason
+        resp_reason = HTTPStatus(resp.status_code).phrase
+
         raise CensusAPIRequestError(
-            f"Census API request failed [{resp.status_code}]: {resp.reason}"
+            f"Census API request failed [{resp.status_code}]: {resp_reason}"
         )
 
     if resp.headers["content-type"] != "application/json;charset=utf-8":
