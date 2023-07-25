@@ -171,6 +171,9 @@ def _check_variables(variables: list[str]) -> None:
                 "Elements of variables must only contain letters, digits, and underscores"
             )
 
+    # Ensure all lowercase for dup checking
+    variables = [var.lower() for var in variables]
+
     if len(variables) != len(set(variables)):
         raise ValueError("variables must not contain any duplicate elements")
 

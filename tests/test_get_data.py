@@ -1,75 +1,108 @@
 """Testing for the pycps.get_data module."""
 
 
-import unittest
-
 import pandas as pd  # type: ignore
+import pytest
 
-import pycps.get_data as get_data
+from pycps import get_data
 
 
-class TestGetData(unittest.TestCase):
-    def test_check_variables(self):
-        self.assertIsNone(get_data._check_variables(["HELLO_world_1234"]))
-
-        bad_types = ["hello", ["hello", 1]]
-
-        for bad_type in bad_types:
-            with self.assertRaises(TypeError):
-                get_data._check_variables(bad_type)
-
-        bad_vals = [["hello, world?"], ["hello", "hello"]]
-
-        for bad_val in bad_vals:
-            with self.assertRaises(ValueError):
-                get_data._check_variables(bad_val)
-
-    def test_make_url(self):
-        self.assertEqual(
-            get_data._make_url(
-                dataset="basic",
-                year=2022,
-                month=3,
-                variables=["prtage", "pwsswgt"],
-                key="helloworld1234",
-            ),
-            (
-                # This part of the URL is actually functional
-                "https://api.census.gov/data/2022/cps/basic/mar?get=PRTAGE,PWSSWGT"
-                # This part causes failure because of invalid key (as you'd expect)
-                "&key=helloworld1234"
-            ),
+class TestCheckVariables:
+    def test_pass(self):
+        assert (
+            get_data._check_variables(["column", "COLUMN_2", "3_last_column"]) is None
         )
 
-    def test_build_df(self):
-        dummy_data = [["HELLO", "WORLD"], ["1", "2"], ["3", "4"]]
-        # [["HELLO", "WORLD"],
-        # ["1", "2"],
-        # ["3", "4"]]
+    @pytest.mark.parametrize(
+        "bad_type",
+        [
+            "column",
+            ["column", 1],
+        ],
+    )
+    def test_bad_type(self, bad_type):
+        with pytest.raises(TypeError):
+            get_data._check_variables(bad_type)
 
-        built = get_data._build_df(dummy_data)
-
-        expected = pd.DataFrame(dict(hello=[1, 3], world=[2, 4]))
-
-        self.assertTrue(built.equals(expected))
-
-    def test_check_year(self):
-        min_year = 2010
-
-        for year in range(min_year, min_year + 10):
-            self.assertIsNone(get_data._check_year(year, min_year))
-
-        with self.assertRaises(ValueError):
-            get_data._check_year(min_year - 1, min_year)
-
-    def test_check_month(self):
-        for month in range(1, 13):
-            self.assertIsNone(get_data._check_month(month))
-
-        for bad_month in [0, 13]:
-            with self.assertRaises(ValueError):
-                get_data._check_month(bad_month)
+    @pytest.mark.parametrize(
+        "bad_value",
+        [
+            ["a column"],
+            ["column?"],
+            ["column", "column"],
+            ["column", "COLUMN"],
+            ["some_column,another_column"],
+        ],
+    )
+    def test_bad_value(self, bad_value):
+        with pytest.raises(ValueError):
+            get_data._check_variables(bad_value)
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_make_url():
+    actual = get_data._make_url(
+        dataset="basic",
+        year=2022,
+        month=3,
+        variables=["prtage", "pwsswgt"],
+        key="1234",
+    )
+
+    expected = (
+        # This technically works, although package users must set API key
+        "https://api.census.gov/data/2022/cps/basic/mar?get=PRTAGE,PWSSWGT"
+        # Fake key, breaks the above
+        "&key=1234"
+    )
+
+    assert actual == expected
+
+
+def test_build_df():
+    raw_data = [
+        ["SOME_COLUMN", "ANOTHER_COLUMN"],
+        ["9", "7.3"],
+        ["5", "1.4"],
+    ]
+
+    expected_df = pd.DataFrame(
+        {
+            "some_column": [9, 5],
+            "another_column": [7.3, 1.4],
+        }
+    )
+
+    actual_df = get_data._build_df(raw_data)
+
+    pd.testing.assert_frame_equal(actual_df, expected_df)
+
+
+class TestCheckYear:
+    @pytest.mark.parametrize("year", [2000, 2001])
+    def test_pass(self, year):
+        assert get_data._check_year(year, min_year=2000) is None
+
+    def test_fail(self):
+        with pytest.raises(ValueError):
+            get_data._check_year(1999, min_year=2000)
+
+
+class TestCheckMonth:
+    @pytest.mark.parametrize(
+        "valid_month",
+        range(1, 13),
+    )
+    def test_pass(self, valid_month):
+        assert get_data._check_month(valid_month) is None
+
+    @pytest.mark.parametrize(
+        "bad_value",
+        [0, 13],
+    )
+    def test_bad_value(self, bad_value):
+        with pytest.raises(ValueError):
+            get_data._check_month(bad_value)
+
+    def test_bad_type(self):
+        with pytest.raises(TypeError):
+            get_data._check_month("jan")
