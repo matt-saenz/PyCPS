@@ -2,6 +2,6 @@
 set -e
 
 black --check --diff src tests
-mypy src tests
+mypy --strict src
 pip install --quiet .
 pytest --quiet tests
