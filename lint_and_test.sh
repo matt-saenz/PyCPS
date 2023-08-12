@@ -2,6 +2,7 @@
 set -e
 
 black --check --diff src tests
-mypy --strict src
+isort --check --diff --profile black src tests
+mypy --strict src tests
 pip install --quiet .
 pytest --quiet tests

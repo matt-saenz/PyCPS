@@ -18,7 +18,6 @@ from http import HTTPStatus
 import pandas as pd  # type: ignore
 import requests  # type: ignore
 
-
 # Hard code month names since they should not vary by locale
 MONTH_NAME = [
     "",  # Empty string at 0 so that month number matches month name
