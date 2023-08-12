@@ -34,7 +34,7 @@ class TestCheckVariables:
             ["some_column,another_column"],
         ],
     )
-    def test_bad_value(self, bad_value: list[Any]) -> None:
+    def test_bad_value(self, bad_value: list[str]) -> None:
         with pytest.raises(ValueError):
             get_data._check_variables(bad_value)
 
