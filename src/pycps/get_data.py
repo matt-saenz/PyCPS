@@ -146,7 +146,7 @@ def _build_df(raw_data: list[list[str]]) -> pd.DataFrame:
     cols = raw_data[1:]
 
     df = pd.DataFrame(data=cols, columns=col_names)
-    df = df.apply(pd.to_numeric)
+    df = df.apply(pd.to_numeric, errors='ignore')
 
     return df
 
