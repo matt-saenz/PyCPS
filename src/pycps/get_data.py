@@ -142,11 +142,16 @@ def _get_data(url: str) -> pd.DataFrame:
 def _build_df(raw_data: list[list[str]]) -> pd.DataFrame:
     """Build DataFrame out of parsed response content."""
 
-    col_names = [col_name.lower() for col_name in raw_data[0]]
-    cols = raw_data[1:]
+    column_names = [column_name.lower() for column_name in raw_data[0]]
+    rows = raw_data[1:]
 
-    df = pd.DataFrame(data=cols, columns=col_names)
-    df = df.apply(pd.to_numeric)
+    df = pd.DataFrame(data=rows, columns=column_names)
+
+    # Set errors to "ignore" so that if column fails to parse as
+    # numeric, it will remain a string
+    # Originally flagged in:
+    # https://github.com/matt-saenz/PyCPS/pull/3
+    df = df.apply(pd.to_numeric, errors="ignore")
 
     return df
 

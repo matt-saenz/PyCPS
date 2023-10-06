@@ -58,20 +58,45 @@ def test_make_url() -> None:
     assert actual == expected
 
 
-def test_build_df() -> None:
-    raw_data = [
-        ["SOME_COLUMN", "ANOTHER_COLUMN"],
-        ["9", "7.3"],
-        ["5", "1.4"],
-    ]
-
-    expected_df = pd.DataFrame(
-        {
-            "some_column": [9, 5],
-            "another_column": [7.3, 1.4],
-        }
-    )
-
+@pytest.mark.parametrize(
+    "raw_data,expected_df",
+    [
+        (
+            # All columns parsable as numeric
+            [
+                ["SOME_COLUMN", "ANOTHER_COLUMN"],
+                ["9", "7.3"],
+                ["5", "1.4"],
+            ],
+            pd.DataFrame(
+                {
+                    "some_column": [9, 5],
+                    "another_column": [7.3, 1.4],
+                }
+            ),
+        ),
+        (
+            # One column not parsable as numeric
+            # Should remain a string
+            [
+                ["SOME_COLUMN", "ANOTHER_COLUMN", "STRING_COLUMN"],
+                ["9", "7.3", "a"],
+                ["5", "1.4", "b"],
+            ],
+            pd.DataFrame(
+                {
+                    "some_column": [9, 5],
+                    "another_column": [7.3, 1.4],
+                    "string_column": ["a", "b"],
+                }
+            ),
+        ),
+    ],
+)
+def test_build_df(
+    raw_data: list[list[str]],
+    expected_df: pd.DataFrame,
+) -> None:
     actual_df = get_data._build_df(raw_data)
 
     pd.testing.assert_frame_equal(actual_df, expected_df)
