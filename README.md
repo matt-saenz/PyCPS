@@ -1,7 +1,6 @@
 # PyCPS
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
 [![Downloads](https://static.pepy.tech/badge/pycpsdata)](https://pepy.tech/project/pycpsdata)
 
 ## Overview
