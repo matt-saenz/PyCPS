@@ -1,4 +1,4 @@
-# PyCPS (development version)
+# PyCPS 1.0.1
 
 * Columns that are not parsable as numeric are now returned as strings. Previously, if any columns failed to parse as numeric an exception was raised. (https://github.com/matt-saenz/PyCPS/pull/3)
 
