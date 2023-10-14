@@ -2,6 +2,8 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
+[![Downloads](https://static.pepy.tech/badge/pycpsdata)](https://pepy.tech/project/pycpsdata)
+
 ## Overview
 
 Python package for loading [Current Population Survey (CPS)](https://www.census.gov/programs-surveys/cps/about.html) microdata into a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html) using the Census Bureau Data API, including [basic monthly CPS](https://www.census.gov/data/datasets/time-series/demo/cps/cps-basic.html) and [CPS ASEC](https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html) microdata.
